@@ -13,8 +13,8 @@ const main = async () => {
   await http.start(upgrade);
 
   const stop = async (code = 0, message?: Error) => {
-    await ws.stop(1000);
-    await http.stop(1000);
+    await ws.stop(4000);
+    await http.stop(4000);
     await bus.stop();
     await storage.stop();
     const alert = code > 0 ? 'error' : 'log';
