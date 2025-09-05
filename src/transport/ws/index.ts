@@ -69,9 +69,9 @@ export default {
       const { pathname, searchParams } = http.parseURL(url);
       const key = pathname === '/' ? '/' : pathname.substring(1);
       if (key !== 'chat') return void connection.close();
-      const factor = meta.get(connection);
-      connections.set(factor, connection);
-      searchParams.set('id', factor);
+      const id = meta.get(connection);
+      connections.set(id, connection);
+      searchParams.set('id', id);
       const data = await connect({ params: searchParams });
       if (!reflection.isEmpty(data.send)) {
         connection.send(JSON.stringify(data.send));
@@ -80,13 +80,13 @@ export default {
         try {
           await receive({ params: searchParams, message, data });
         } catch (e) {
-          connections.delete(factor);
+          connections.delete(id);
           connection.close();
           logger.error({ e });
         }
       });
       connection.on('close', () => {
-        connections.delete(factor);
+        connections.delete(id);
       });
     });
     return ({ req, socket, head, id }: any) => {
