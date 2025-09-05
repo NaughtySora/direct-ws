@@ -1,0 +1,12 @@
+package.json
+package-lock.json
+dist
+test
+.github
+eslint
+README
+tsconfig
+eslint.config.js
+prettier.config.js
+docker-compose.yml
+tsconfig.json

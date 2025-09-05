@@ -1,0 +1,6 @@
+node_modules
+dist
+.env
+src/storage/main/install/schema.sql
+mock-auth-service/keys
+public.pem
