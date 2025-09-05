@@ -8,7 +8,7 @@ SET search_path TO "$user";
 
 CREATE TABLE IF NOT EXISTS messages (
   id bigserial PRIMARY KEY,
-  author uuid PRIMARY KEY,
+  author uuid NOT NULL,
   recipient uuid NOT NULL,
   content text NOT NULL,
   date timestamptz NOT NULL
