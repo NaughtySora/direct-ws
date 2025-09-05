@@ -1,2 +1,2 @@
-import colorful from "./colorful";
+import colorful from './colorful';
 export default colorful;

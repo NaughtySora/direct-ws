@@ -1,6 +1,6 @@
-import { Pool, Client } from "pg";
-import config from "../../config/postgres";
-import logger from "../../application/logger/index";
+import { Pool, Client } from 'pg';
+import config from '../../config/postgres';
+import logger from '../../application/logger/index';
 
 let instance: Pool | null = null;
 
@@ -28,7 +28,7 @@ export const api = {
 export default {
   async start() {
     if (instance !== null) throw new Error('postgres is already running');
-    const pool = instance = new Pool(config);
+    const pool = (instance = new Pool(config));
     pool.on('error', () => {
       logger.error('postgres connection error');
     });

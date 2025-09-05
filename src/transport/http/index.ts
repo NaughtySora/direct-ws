@@ -1,15 +1,15 @@
-import { createServer } from "node:http";
-import { Socket } from "node:net";
-import { http } from "naughty-util";
-import session from "../../application/session/index";
-import logger from "../../application/logger/index";
-import utils from "../../utils/index";
-import config from "../../config/http";
+import { createServer } from 'node:http';
+import { Socket } from 'node:net';
+import { http } from 'naughty-util';
+import session from '../../application/session/index';
+import logger from '../../application/logger/index';
+import utils from '../../utils/index';
+import config from '../../config/http';
 
 const EOL = '\r\n\r\n';
 const message = (code: number) => {
   return `HTTP/1.1 ${code} ${http.CODES[code as keyof typeof http.CODES]}${EOL}`;
-}
+};
 const end = (code: number, socket: Socket) => {
   socket.write(message(code));
   socket.destroy();
@@ -20,8 +20,8 @@ let stopping = false;
 
 export default {
   async start(upgrade: any) {
-    const server = instance = createServer();
-    server.on("upgrade", (req: any, socket: Socket, head: any) => {
+    const server = (instance = createServer());
+    server.on('upgrade', (req: any, socket: Socket, head: any) => {
       const headers = req.headers;
       const token = utils.http.parseToken(headers);
       if (token === undefined) return void end(401, socket);
@@ -29,7 +29,7 @@ export default {
       try {
         id = session.verify(token);
       } catch (e) {
-        logger.error('Can\'t verify jwt', e);
+        logger.error("Can't verify jwt", e);
       }
       if (id === undefined) return void end(401, socket);
       upgrade({ req, socket, head, id });
@@ -56,5 +56,5 @@ export default {
       }, ms);
       instance.close(stop);
     });
-  }
+  },
 };

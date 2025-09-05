@@ -1,8 +1,8 @@
-import { WebSocketServer } from "ws";
-import { reflection, http, array } from "naughty-util";
-import { api as bus } from "../bus";
-import messageRepo from "../../storage/main/repository/message";
-import logger from "../../application/logger/index";
+import { WebSocketServer } from 'ws';
+import { reflection, http, array } from 'naughty-util';
+import { api as bus } from '../bus';
+import messageRepo from '../../storage/main/repository/message';
+import logger from '../../application/logger/index';
 
 const collator = new Intl.Collator('en', { sensitivity: 'base' });
 const meta = new WeakMap();
@@ -18,7 +18,7 @@ const connect = async ({ params }: any) => {
   const sender = params.get('id');
   const recipient = params.get('recipient');
   logger.log(`Sender ${sender} / recipient ${recipient}`);
-  const chatId = [sender, recipient].sort((a, b) => collator.compare(a, b)).join(":");
+  const chatId = [sender, recipient].sort((a, b) => collator.compare(a, b)).join(':');
   const send = await bus.poll(chatId, 0, HOT_MESSAGES);
   return {
     sender,
@@ -28,7 +28,7 @@ const connect = async ({ params }: any) => {
   };
 };
 
-const receive = async ({ message, data, }: any) => {
+const receive = async ({ message, data }: any) => {
   let parsed = null;
   try {
     parsed = JSON.parse(message.toString());
@@ -61,14 +61,14 @@ const notify = async (message: string, topic: string) => {
 
 export default {
   async start() {
-    bus.subscribe([{ event: "chat:*", callback: notify }]);
-    const wss = instance = new WebSocketServer({ noServer: true });
-    wss.on("connection", async (connection: any, req: any) => {
+    bus.subscribe([{ event: 'chat:*', callback: notify }]);
+    const wss = (instance = new WebSocketServer({ noServer: true }));
+    wss.on('connection', async (connection: any, req: any) => {
       const url = req.url;
       if (url === undefined) return void connection.close();
       const { pathname, searchParams } = http.parseURL(url);
-      const key = pathname === "/" ? "/" : pathname.substring(1);
-      if (key !== "chat") return void connection.close();
+      const key = pathname === '/' ? '/' : pathname.substring(1);
+      if (key !== 'chat') return void connection.close();
       const factor = meta.get(connection);
       connections.set(factor, connection);
       searchParams.set('id', factor);
@@ -76,7 +76,7 @@ export default {
       if (!reflection.isEmpty(data.send)) {
         connection.send(JSON.stringify(data.send));
       }
-      connection.on("message", async (message: any) => {
+      connection.on('message', async (message: any) => {
         try {
           await receive({ params: searchParams, message, data });
         } catch (e) {
@@ -85,14 +85,14 @@ export default {
           logger.error({ e });
         }
       });
-      connection.on("close", () => {
+      connection.on('close', () => {
         connections.delete(factor);
       });
     });
     return ({ req, socket, head, id }: any) => {
       wss.handleUpgrade(req, socket, head, (ws: any) => {
         meta.set(ws, id);
-        wss.emit("connection", ws, req);
+        wss.emit('connection', ws, req);
       });
     };
   },
@@ -105,7 +105,7 @@ export default {
         instance = null;
         stopping = false;
         resolve(undefined);
-        logger.log("WS server stopped");
+        logger.log('WS server stopped');
       };
       setTimeout(stop, ms);
       instance.close(stop);

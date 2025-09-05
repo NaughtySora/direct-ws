@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-import http from "./src/transport/http/index";
-import ws from "./src/transport/ws/index";
-import bus from "./src/transport/bus/index";
-import storage from "./src/storage/main/index";
-import logger from "./src/application/logger/index"
+import http from './src/transport/http/index';
+import ws from './src/transport/ws/index';
+import bus from './src/transport/bus/index';
+import storage from './src/storage/main/index';
+import logger from './src/application/logger/index';
 
 const main = async () => {
   await storage.start();

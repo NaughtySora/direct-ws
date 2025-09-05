@@ -1,19 +1,6 @@
 'use strict';
 
 const { misc } = require('naughty-util');
-/**
- * application predicate
- * chat channel establishing with 2 users as a (DM chat)
- * users can send a text message
- * when user enters the room user can see last 100 messages
- * user can scroll up and pull more previous messages
- */
-
-/**
- *! Connection
- * connect to chat room
- * pull last 100 messages
- */
 
 const { WebSocket } = require('node:http');
 {
@@ -67,13 +54,13 @@ const { WebSocket } = require('node:http');
       connect(recipient, SENDER)
     ]);
 
-    // setInterval(() => {
-    //   s1("hi!");
-    // }, misc.random(3000, 1000));
+    setInterval(() => {
+      s1("hi!");
+    }, misc.random(3000, 1000));
 
-    // setInterval(() => {
-    //   s2("hiii!");
-    // }, misc.random(3000, 1000));
+    setInterval(() => {
+      s2("hiii!");
+    }, misc.random(3000, 1000));
   })();
 }
 

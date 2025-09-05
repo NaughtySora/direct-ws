@@ -1,6 +1,5 @@
 {
   "version": "0.0.1",
-  "private": "true",
   "author": "NaughtySora <naughtysora@proton.me>",
   "engines": {
     "node": ">= 24.4.1"
@@ -14,7 +13,8 @@
     "auth": "nodemon mock-auth-service/index.ts",
     "lint": "npx eslint .",
     "prettify": "npx prettier . --write",
-    "pretty-check": "npx prettier . --check"
+    "pretty-check": "npx prettier . --check",
+    "test": "node --env-file=.env test/index.js"
   },
   "dependencies": {
     "dotenv": "^17.2.2",

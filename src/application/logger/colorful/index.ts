@@ -1,6 +1,9 @@
-import { palette } from "naughty-util";
+import { palette } from 'naughty-util';
 
-const { dye, COLORS: { blue, green, red, yellow } } = palette;
+const {
+  dye,
+  COLORS: { blue, green, red, yellow },
+} = palette;
 const intl = new Intl.DateTimeFormat(undefined, {
   year: '2-digit',
   month: '2-digit',
